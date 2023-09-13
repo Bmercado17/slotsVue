@@ -1,30 +1,54 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
+
+
+
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
-</template>
+  <app-form>
+    <template v-slot:help>
+      <p>This help text</p>
+    </template>
+    <template v-slot:fields>
+      <input type="text" placeholder="email">
+      <input type="text" placeholder="username">
+      <input type="text" placeholder="password"> 
+    </template>
+    <template v-slot:buttons>
+      <button type="submit">Submit</button>
+    </template>
+  </app-form>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+  <!-- Secondform affected by slots -->
+  <app-form>
+    <template v-slot:help>
+      <p>contact help text</p>
+      <h6>{{ help }}</h6>
+      <!-- v-slot and template to be able to pass it down to child component -->
+    </template>
+    <template v-slot:fields>
+      <input type="text" placeholder="name">
+      <input type="text" placeholder="message">
+    </template>      
+    <template v-slot:buttons>
+      <button type="submit">Submit me</button>
+    </template>
+    <p>dummy default slot on child comp</p>
+  </app-form>
+  </template>
+<!-- vue logic -->
+
+<script>
+import AppForm from "./components/Form.vue"
+// register the child component so it can be utilized
+  export default {
+    name:"App",
+    components:{
+      AppForm,
+    },
+    data(){
+      return {
+        help:'this can be passed with double brackets, once building the data func'
+      }
+    }
+
+  }
+</script> 
